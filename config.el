@@ -51,15 +51,20 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+;;Gtags
 (use-package! helm-gtags
   :init
   (helm-gtags-mode)
   :config
   (progn
+    (setq helm-gtags-ignore-case t
+          helm-gtags-auto-update t
+          helm-gtags-use-input-at-cursor t)
     (add-hook 'c-mode-hook 'helm-gtags-mode)
     (add-hook 'dired-mode-hook 'helm-gtags-mode)
     (add-hook 'c++-mode-hook 'helm-gtags-mode)
     (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+    (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
     (define-key helm-gtags-mode-map (kbd "M-i") 'helm-imenu)
     (define-key helm-gtags-mode-map (kbd "C-s") 'helm-gtags-select)
     (evil-make-overriding-map helm-gtags-mode-map 'normal)
@@ -71,3 +76,8 @@
      (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
      (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
      (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
+
+;; Show unnecesary whitespaces
+(add-hook 'prog-mode-hook
+          (lambda () (interactive)
+            (setq show-trailing-whitespace 1)))
