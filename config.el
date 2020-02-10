@@ -81,3 +81,6 @@
 (add-hook 'prog-mode-hook
           (lambda () (interactive)
             (setq show-trailing-whitespace 1)))
+
+;; Cool dashboard
+(setq +doom-dashboard-banner-file (expand-file-name "meditate.png" doom-private-dir))
