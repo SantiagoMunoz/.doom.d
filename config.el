@@ -53,6 +53,7 @@
 
 ;;Gtags
 (use-package! helm-gtags
+  :defer t
   :init
   (helm-gtags-mode)
   :config
@@ -68,8 +69,19 @@
     (define-key helm-gtags-mode-map (kbd "M-i") 'helm-imenu)
     (define-key helm-gtags-mode-map (kbd "C-s") 'helm-gtags-select)
     (evil-make-overriding-map helm-gtags-mode-map 'normal)
-    (add-hook 'helm-gtags-mode-hook #'evil-normalize-keymaps)))
+    (add-hook 'helm-gtags-mode-hook #'evil-normalize-keymaps))
+  ;;Also add shortcuts to doom menu
+  (map! :localleader
+        :map helm-gtags-mode-map
+        :prefix "g"
+        "g" #'helm-gtags-find-pattern
+        "s" #'helm-gtags-find-symbol
+        "t" #'helm-gtags-find-tag
+        "r" #'helm-gtags-find-rtag
+        "c" #'helm-gtags-resume))
 
+
+;; Faster split navigation
 (eval-after-load "evil"
   '(progn
      (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
